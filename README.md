@@ -1,3 +1,3 @@
 # calc
 
-ES6 
+[Demo](http://mckincase.com/demo/calc/index.html)
