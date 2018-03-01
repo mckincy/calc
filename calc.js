@@ -1,5 +1,4 @@
     // 定义计算器对象
-    'use strict';
     let calc = {
       numberStack: [0], //定义数字栈
       operStack: [], //定义操作符栈
