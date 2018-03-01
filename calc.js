@@ -1,4 +1,5 @@
     // 定义计算器对象
+    'use strict';
     let calc = {
       numberStack: [0], //定义数字栈
       operStack: [], //定义操作符栈
@@ -7,6 +8,9 @@
         '-': (a, b) => a - b,
         '*': (a, b) => a * b,
         '/': (a, b) => a / b,
+        'factorial': function f(n, t = 1) {
+          return n < 2 ? t : f(n-1, n*t) //尾递归与箭头函数无法共用
+        },
         'clear': () => 0,
       },
       pushNumberStack: function (val) {
@@ -19,16 +23,20 @@
         }
       },
       pushOperStack: function (val) {
-        if (val === 'clear') {
-          this.operStack.push(val)
-          this.compute().resetScreen() //立即计算
-        } else {
-          this.operStack.pop()
-          this.operStack.push(val) //缓存计算符
+        this.operStack.push(val)
+        switch(val)
+        {
+          case 'clear':
+            this.compute().resetScreen() //立即计算
+            break;
+          case 'factorial':
+            this.compute().resetScreen() //立即计算
+            break;
         }
       },
       compute: function () {
         let op = this.opMap[this.operStack.pop()] //按缓存计算符生成计算函数
+        console.log(op)
         let result = op.call(this, ...this.numberStack) //生成计算结果
         this.numberStack.length = 0 //此处没用循环numberStack.pop()，同时把pop值生成新的计算参数，而是置0清空，感觉这样更简单？
         this.numberStack.push(result) //计算结果压入数字栈
@@ -52,3 +60,5 @@
 
     // 初始化
     calc.init()
+
+
